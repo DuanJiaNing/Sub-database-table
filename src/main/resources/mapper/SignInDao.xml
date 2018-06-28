@@ -11,14 +11,6 @@
             value (#{id}, #{customerId}, #{date}, #{currentSignInStoreId}, #{type}, #{createEid}, now())
     </insert>
 
-    <insert id="batchInsert" parameterType="SignInEntity">
-        insert into sign_in (id, customer_id, date, current_sign_in_store_id, type, create_eid, create_date)
-        value
-        <foreach collection="list" item="ent" open="(" close=")" separator=",">
-            #{ent.id}, #{ent.customerId}, #{ent.date}, #{ent.currentSignInStoreId}, #{ent.type}, #{ent.createEid}, now()
-        </foreach>
-    </insert>
-
     <select id="listByCustomerId" resultType="SignInEntity">
         select *
         from sign_in
@@ -49,7 +41,7 @@
     </select>
 
     <select id="testSelect" resultType="SignInEntity">
-        SELECT id from sign_in where customer_id in (select id from sign_in where id &lt; 9000) group by customer_id
+        SELECT * from sign_in WHERE DATE='2018-05-11 17:00:15.0'
     </select>
 
 </mapper>

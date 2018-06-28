@@ -7,7 +7,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -33,22 +32,14 @@ public class BaseTest {
         signInDao = context.getBean(SignInDao.class);
 
 //        testInsert();
-//        testBatchInsert();
 //        testQueryById();
 //        testDeleteById();
 //        testUpdate();
 
-//        long startTime = System.currentTimeMillis();
-        final List<SignInEntity> list = signInDao.testSelect();
-        list.forEach(System.out::println);
-        System.out.println("----size "+list.size());
-//        long endTime = System.currentTimeMillis();
-//        long sqlCost = endTime - startTime;
-//        System.out.println("--------------- cost time [" + sqlCost + "ms]");
+        signInDao.testSelect().forEach(System.out::println);
 
 
     }
-
 
     private void testUpdate() {
 
@@ -89,38 +80,16 @@ public class BaseTest {
         SignInEntity entity = new SignInEntity();
         Random r = new Random();
         // 路由规则将在三张表中插入数据，数据将平均分布
-        for (int i = 1; i <= 50; i++) {
+        for (int i = 1; i <= 10 * 10000; i++) {
             entity.setId(i);
-            entity.setType(r.nextInt(3) + 1);
-            entity.setCustomerId(r.nextInt(999) + 1);
-            entity.setCurrentSignInStoreId(r.nextInt(999) + 1);
-            entity.setCreateEid(r.nextInt(999) + 1);
+            entity.setType(r.nextInt(3));
+            entity.setCustomerId(r.nextInt(9999));
+            entity.setCurrentSignInStoreId(r.nextInt(9999));
+            entity.setCreateEid(r.nextInt(9999));
             entity.setDate(new Timestamp(System.currentTimeMillis()));
             signInDao.insert(entity);
         }
 
     }
 
-
-    private void testBatchInsert() {
-        SignInEntity entity = new SignInEntity();
-        Random r = new Random();
-        // 路由规则将在三张表中插入数据，数据将平均分布
-
-        int c = 10;
-        for (int j = 0; j < 10; j++) {
-            List<SignInEntity> list = new ArrayList<>(c);
-            for (int i = 1; i <= c; i++) {
-                entity.setId(i);
-                entity.setType(r.nextInt(3) + 1);
-                entity.setCustomerId(r.nextInt(999) + 1);
-                entity.setCurrentSignInStoreId(r.nextInt(999) + 1);
-                entity.setCreateEid(r.nextInt(999) + 1);
-                entity.setDate(new Timestamp(System.currentTimeMillis()));
-                list.add(entity);
-            }
-            signInDao.batchInsert(list);
-        }
-
-    }
 }

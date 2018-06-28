@@ -19,8 +19,6 @@ public interface SignInDao {
 
     void insert(SignInEntity entity);
 
-    void batchInsert(List<SignInEntity> list);
-
     SignInEntity get(int id);
 
     int delete(int id);
