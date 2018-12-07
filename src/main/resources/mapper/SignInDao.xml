@@ -5,7 +5,6 @@
 <mapper namespace="com.duan.zebrademo.dao.SignInDao">
 
     <!--记得将【维度】明确表示-->
-
     <insert id="insert" parameterType="SignInEntity">
         insert into sign_in (id, customer_id, date, current_sign_in_store_id, type, create_eid, create_date)
             value (#{id}, #{customerId}, #{date}, #{currentSignInStoreId}, #{type}, #{createEid}, now())
